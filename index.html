@@ -13,11 +13,38 @@
     <div id="game-container">
         <canvas id="gameCanvas"></canvas>
         <div id="ui-overlay">
-            <div id="score-board">SCORE: <span id="score">0</span></div>
+            <div id="top-bar">
+                <div id="score-board">SCORE: <span id="score">0</span></div>
+                <div id="wave-counter">WAVE: <span id="wave">1</span></div>
+            </div>
+            <div id="energy-bar-container">
+                <div id="energy-bar"></div>
+                <div id="energy-text">ENERGY</div>
+            </div>
+            <div id="charge-bar-container" class="hidden">
+                <div id="charge-bar"></div>
+            </div>
+            <div id="start-screen">
+                <h1 id="title">ATARISCO</h1>
+                <div id="tutorial">
+                    <div class="control-item"><span>MOVER:</span> A / D ou SETAS</div>
+                    <div class="control-item"><span>TIRO:</span> ESPAÇO (CLIQUE)</div>
+                    <div class="control-item"><span>CARREGAR:</span> ESPAÇO (SEGURAR)</div>
+                </div>
+                <div id="mechanics-info">
+                    <p>🔋 Energia regenera rápido</p>
+                    <p>🛡️ Escudos te protegem</p>
+                    <p>🌌 Antigravity curva seus tiros</p>
+                    <p>🎁 Colete itens para Power-Ups!</p>
+                </div>
+                <button id="start-button">INICIAR DEFESA</button>
+            </div>
             <div id="message-container" class="hidden">
                 <h1 id="game-over-text">GAME OVER</h1>
+                <p id="game-result"></p>
                 <p>Pressione <span class="highlight">R</span> para Reiniciar</p>
             </div>
+            <div id="antigravity-indicator" class="hidden">ANTIGRAVITY ACTIVE</div>
         </div>
     </div>
     <script src="game.js"></script>
