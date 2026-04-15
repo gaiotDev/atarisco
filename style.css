@@ -53,14 +53,21 @@ canvas {
     text-shadow: 2px 2px #000;
 }
 
-#energy-bar-container {
+#energy-bar-container, #health-bar-container {
     width: 200px;
     height: 20px;
     border: 2px solid #fff;
-    background: #400;
     position: relative;
     margin-top: 10px;
     align-self: flex-start;
+}
+
+#energy-bar-container {
+    background: #400;
+}
+
+#health-bar-container {
+    background: #040;
 }
 
 #energy-bar {
@@ -70,7 +77,14 @@ canvas {
     transition: width 0.1s;
 }
 
-#energy-text {
+#health-bar {
+    height: 100%;
+    background: #f00;
+    width: 100%;
+    transition: width 0.3s;
+}
+
+#energy-text, #health-text {
     position: absolute;
     width: 100%;
     text-align: center;
@@ -79,6 +93,7 @@ canvas {
     transform: translateY(-50%);
     color: #fff;
     mix-blend-mode: difference;
+    z-index: 1;
 }
 
 #charge-bar-container {
@@ -160,9 +175,12 @@ canvas {
 }
 
 #mechanics-info p {
-    font-size: 10px;
-    margin: 8px 0;
+    font-size: 9px;
+    margin: 10px 0;
     color: #ccc;
+    line-height: 1.4;
+    text-align: left;
+    max-width: 400px;
 }
 
 #start-button {

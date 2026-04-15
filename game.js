@@ -8,6 +8,8 @@ const chargeBar = document.getElementById('charge-bar');
 const messageContainer = document.getElementById('message-container');
 const startScreen = document.getElementById('start-screen');
 const startButton = document.getElementById('start-button');
+const healthBar = document.getElementById('health-bar');
+const healthText = document.getElementById('health-text');
 const gameResultText = document.getElementById('game-result');
 const antigravityIndicator = document.getElementById('antigravity-indicator');
 
@@ -41,6 +43,8 @@ const player = {
     color: '#00ff00',
     energy: 100,
     maxEnergy: 100,
+    hp: 10,
+    maxHp: 10,
     energyRecover: 0.6, // 3x mais rápido
     shootCost: 10, // Custo reduzido
     isOverheating: false,
@@ -64,23 +68,6 @@ const totalShields = 4;
 
 function initShields() {
     shields = [];
-    const spacing = canvas.width / (totalShields + 1);
-    for (let i = 0; i < totalShields; i++) {
-        const startX = spacing * (i + 1) - 40;
-        const startY = canvas.height - 120;
-        for (let r = 0; r < shieldRows; r++) {
-            for (let c = 0; c < shieldCols; c++) {
-                shields.push({
-                    x: startX + c * 20,
-                    y: startY + r * 15,
-                    width: 20,
-                    height: 15,
-                    hp: 5, // Aumentado de 3 para 5
-                    maxHp: 5
-                });
-            }
-        }
-    }
 }
 
 // Inimigos - MODIFICADO: VELOCIDADE INICIAL REDUZIDA
@@ -281,6 +268,10 @@ function update() {
     // Update UI
     energyBar.style.width = (player.energy / player.maxEnergy * 100) + '%';
     energyBar.style.background = player.isOverheating ? '#f00' : '#0f0';
+    
+    // Update Health UI
+    healthBar.style.width = (player.hp / player.maxHp * 100) + '%';
+    healthText.textContent = `LIFE: ${Math.ceil(player.hp)}/${player.maxHp}`;
     if (player.isCharging) {
         chargeBarContainer.classList.remove('hidden');
         chargeBarContainer.style.left = (player.x) + 'px';
@@ -377,7 +368,13 @@ function checkCollisions() {
         
         if (p.owner === 'enemy' && checkCollision(p, player)) {
             projectiles.splice(pIdx, 1);
-            if (player.tempShield <= 0) endGame("DESTRUÍDO!");
+            if (player.tempShield <= 0) {
+                player.hp -= 1;
+                if (player.hp <= 0) {
+                    player.hp = 0;
+                    endGame("DESTRUÍDO!");
+                }
+            }
         }
 
         shields.forEach((s, sIdx) => {
@@ -504,7 +501,7 @@ function restartGame() {
     waveElement.textContent = "1";
     gameOver = false;
     enemies = []; projectiles = []; powerups = []; boss = null;
-    player.energy = 100; player.isOverheating = false;
+    player.energy = 100; player.hp = 10; player.isOverheating = false;
     player.multiShot = false; player.autoFire = false; player.speedBoost = 0; player.tempShield = 0;
     messageContainer.classList.add('hidden');
     initEnemies();
